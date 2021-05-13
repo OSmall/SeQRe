@@ -1,0 +1,2 @@
+# Methods required
+## Registration phase
