@@ -1,5 +1,7 @@
 # Methods required
----
+# {url}/primary
+
+
 ## Create New Account
 ```
 newAccount(pubKey, deviceName): userID
@@ -17,12 +19,18 @@ Issues:
 ---
 ## Add New Device
 ```
-    addNewKey(userID, pubKey, newDeviceName, sigDevice, signature): success
+    addNewDevice(userID, pubKey, newDeviceName, sigKey, signature): success
 ```
 Add a new device to an account.
 
+- userID:
+- pubKey: might combine these two ^
+- newDeviceName:
+- sigKey: name of alias of key. Could either be a device key or a session key given to an untrusted computer
+
+
 1. Public and private key pair is computed on the phone. Private key is stored securely on the phone.
-1. The userID, pubKey, newDeviceName, sigDevice are concatenated and signed with the stored private key.
+1. The userID, pubKey, newDeviceName, sigKey are concatenated and signed with the stored private key.
 1. Paramaters are sent to the server. Signature is verified with the publicKey and checked to see if matched with the parameters.
 1. If it matches, the new device is added to the database and a success response is sent.
 
@@ -34,3 +42,7 @@ Issues:
 ```
 getSession(userID)
 ```
+
+
+---
+# {url}/secondary
