@@ -63,16 +63,15 @@ Called by untrusted computer to get the parameters needed for the phone to gener
 
 ---
 
-## Register Session Key
+## Generate Session Key
 
 ```
-registerSessionKey(userID, pubKey): alias
+generateSessionKey(userID): alias
 ```
 
-Untrusted computer creates public and private key pair to register with the server. This key is not yet authenticated and cannot be used to authenticate.
+Server creates a symmetric key and stores it. This key is not yet authenticated and cannot be used to authenticate.
 
 - userID:
-- pubKey:
 - alias: a string that includes browser type, OS and time
 
 Issues:
@@ -84,5 +83,9 @@ Issues:
 ## Authenticate Session
 
 ```
-authenticateSession(userID, sessionKeyAlias, otp): success
+authenticateSession(userID, sessionKeyAlias, otp): success, expiryTime
 ```
+
+Possible changes:
+
+- Make it return account balance or something so that it can display data on the webpage
