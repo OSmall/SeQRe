@@ -25,7 +25,7 @@ Possible Changes:
 ## Add New Device
 
 ```
-    addNewDevice(userID, newDeviceName, sigKeyAlias, signature): success
+addNewDevice(userID, newDeviceName, sigKeyAlias, signature): success
 ```
 
 Add a new device to an account.
