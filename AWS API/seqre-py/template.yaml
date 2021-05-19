@@ -20,7 +20,7 @@ Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello_world/
+      CodeUri: functions/hello_world/
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -31,7 +31,7 @@ Resources:
   CreateAccountFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: create_account/
+      CodeUri: functions/create_account/
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref PrimaryKeyTable
@@ -45,7 +45,7 @@ Resources:
   GetCAuthFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: get_cauth/
+      CodeUri: functions/get_cauth/
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref PrimaryKeyTable
@@ -61,7 +61,7 @@ Resources:
   AuthenticateSessionFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: authenticate_session/
+      CodeUri: functions/authenticate_session/
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref SessionKeyTable
