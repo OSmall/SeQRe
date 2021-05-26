@@ -1,0 +1,65 @@
+
+<html>
+
+	<!-- (A) Load QRCODEJS, JQUERY libs -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+
+	<head>
+		<title>SeQRe Authentication</title>
+		<style>
+			body{
+				font-family: Arial, sans-serif;
+			}
+
+			h1{
+				font-family: Helvetica, sans-serif;
+				font-size: 72px;
+			}
+		</style>
+
+		<!-- FADE CODE -->
+		<script>
+			$(document).ready(function() {
+			$('body').css('display', 'none');
+			$('body').fadeIn(1000);
+			$('.link').click(function() {
+			event.preventDefault();
+			newLocation = this.href;
+			$('body').fadeOut(1000, newpage);
+			});
+
+			function newpage() {
+				window.location = newLocation;
+			}
+
+			});
+
+		</script>
+	</head>
+
+	<body style="background-color:#1fffff">
+
+		<h1 align="center" style="padding-top:30px; margin-bottom:-20px;">SeQRe Authentication</h1>
+		<h3 align="center">Please scan the QR code below to complete account authentication</h3>
+
+		<!--QR Code Placeholder-->
+		<div id="qrcode" align="center" style="padding:100px"></div>
+
+		<!-- Generate QR Code Script -->
+		<script>
+
+		url ="com.amazon.mobile.shopping.web://amazon.com"
+
+		window.addEventListener("load", function(){
+		  var qr_code = new QRCode(document.getElementById("qrcode"), url);
+		});
+		</script>
+
+	</body>
+
+	<footer>
+		<center><a href="https://google.com">Click here to install SeQRe</a></center>
+	</footer>
+</html>
