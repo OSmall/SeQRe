@@ -44,42 +44,88 @@
         </div>
     </nav>
 
-    <div class="container-xxl">
-        <div align="center">
-            <h1 style="padding:20px">Log in with QR code below:</h1>
+    <div class="container-sm">
 
 
-            <!--QR Code Placeholder-->
-            <div id="qrcode" style="padding:50px"></div>
+        <div class="accordion pt-md-5" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <strong>Online Login</strong>
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div align="center">
+                            <h1 style="padding:20px">Scan the QR code below:</h1>
 
-            <!-- Generate QR Code Script -->
-            <script>
-                url = "com.amazon.mobile.shopping.web://amazon.com"
 
-                window.addEventListener("load", function () {
-                    var qr_code = new QRCode(document.getElementById("qrcode"), url);
-                });
-            </script>
+                            <!--QR Code Placeholder-->
+                            <div id="qrcode" style="padding:50px"></div>
 
-            <h1>OR</h1>
+                            <!-- Generate QR Code Script -->
+                            <script>
+                                url = "com.amazon.mobile.shopping.web://amazon.com"
 
-            <h1 style="padding-bottom: 20px;">Offline Log In:</h1>
+                                window.addEventListener("load", function () {
+                                    var qr_code = new QRCode(document.getElementById("qrcode"), url);
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <strong>Offline Login</strong>
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <form>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="exampleUserId" placeholder="id123">
+                                <label for="exampleUserId" class="form-label">User ID</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="exampleKeyAlias" placeholder="key123">
+                                <label for="exampleKeyAlias" class="form-label">Key Alias</label>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="submitButton"
+                                onclick="offlineSubmit()">Submit</button>
+                            <script>
+                                function offlineSubmit() {
+                                    document.getElementById("qrcode1").innerHTML = "<div class=\"spinner-border text-primary\" role=\"status\"><span class=\"visually-hidden\">Loading...</span></div>";
+                                    document.getElementById("otpForm").classList.add("visually-hidden");
+                                    setTimeout(() => {
+                                        document.getElementById("qrcode1").innerHTML = "";
+                                        var qr_code = new QRCode(document.getElementById("qrcode1"), url);
+                                        document.getElementById("otpForm").classList.remove("visually-hidden");
+                                    }, 2000);
+                                }
+                            </script>
+                        </form>
+                        <div id="qrcode1" class="pt-md-3 pb-md-3" align="center"></div>
+                        <form id="otpForm" class="visually-hidden" action="https://login.anz.com/internetbanking">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="exampleOTP" placeholder="id123">
+                                <label for="exampleOTP" class="form-label">One-Time Password</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="otpSubmitButton">Submit</button>
+                        </form>
+
+                        
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <form>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="exampleUserId" placeholder="id123">
-                <label for="exampleUserId" class="form-label">User ID</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="exampleKeyAlias" placeholder="key123">
-                <label for="exampleKeyAlias" class="form-label">Key Alias</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-
-
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
