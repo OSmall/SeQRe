@@ -7,6 +7,7 @@ from Crypto.Random import get_random_bytes
 dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
+    
     try:
             
         body = json.loads(event['body'])
@@ -59,7 +60,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Headers" : "*"
             }
         }
-        
+
     except:
         return{
             "statuscode":500,
