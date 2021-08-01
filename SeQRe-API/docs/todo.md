@@ -6,3 +6,5 @@
 - Add proper error responses
 - Refactor db so that primary key is not combined
 - Documentation
+
+I have decided to do staging just by running tests locally then deploying to prod
