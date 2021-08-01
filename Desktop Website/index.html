@@ -3,134 +3,111 @@
 
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>SeQRe</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"/>
+
+    <!-- Local Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/local_stylesheet.css" />
 
     <!-- (A) Load QRCODEJS, JQUERY libs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-    <title>SeQRe</title>
+    <!-- Load controller.js -->
+    <script>
+
+    $(document).ready(function() {
+      $('#user-id-submitted').click(function() {
+        event.preventDefault();
+
+        
+        $.ajax({ // make an AJAX request
+            mode: 'no-cors',
+            type: "POST",
+            url: "https://4ds1vqhwx2.execute-api.ap-southeast-2.amazonaws.com/Prod/getCAuth/", 
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify( {
+              "id":document.getElementById("user_id").value,
+              "alias":document.getElementById("alias").value
+            }),
+            success: function(data) {
+              console.log(data);
+            }
+        });
+
+        console.log('user_id: ' + document.getElementById("user_id").value);
+        console.log('alias: ' + document.getElementById("alias").value);
+      });
+    });
+    </script>
+
 </head>
 
 <body>
+  <div class="container">
+    <div class="content">
+      <!-- NAVIGATION -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+              <a class="navbar-brand" href="#"><img src="media/logo+title.png" width="300"></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                  aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item">
+                          <a class="nav-link active" href="index.html" href="#">Generate QR</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link active" href="other.html">Download</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link active" href="#">About</a>
+                      </li>
+                  </ul>
+                  <form class="d-flex">
+                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-primary" type="submit">Search</button>
+                  </form>
+              </div>
+          </div>
+      </nav>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="logo+title.png" width="300"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Download</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">About</a>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">Search</button>
-                </form>
-            </div>
-        </div>
-    </nav>
+      <!-- USER ID INPUT -->
+      <div id="user-id-screen" class="text-center" style="margin-top:100px">
+        <form id="user-id-form" class="form-signin">
+          <h2> Please enter your userID </h2>
+          <label for="inputUserID" class="sr-only"> </label>
+          <div class="input-group">
+            <input id="user_id" class="form-control" placeholder="userID" required="true" autofocus>
+          </div>
+          <div class="input-group">
+            <input id="alias" class="form-control" placeholder="alias" required="true" autofocus>
+          </div>
+          <div class="checkbox mb-3 mt-5">
+            <label><input type="checkbox" id="offline"> My phone is offline!</label>
+          </div>
+          <button class="btn btn-lg btn-primary mt-5" type="submit" id="user-id-submitted">Generate QR</button>
+        </form>
+      </div>
 
-    <div class="container-sm">
-
-
-        <div class="accordion pt-md-5" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <strong>Online Login</strong>
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div align="center">
-                            <h1 style="padding:20px">Scan the QR code below:</h1>
-
-
-                            <!--QR Code Placeholder-->
-                            <div id="qrcode" style="padding:50px"></div>
-
-                            <!-- Generate QR Code Script -->
-                            <script>
-                                url = "com.amazon.mobile.shopping.web://amazon.com"
-
-                                window.addEventListener("load", function () {
-                                    var qr_code = new QRCode(document.getElementById("qrcode"), url);
-                                });
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <strong>Offline Login</strong>
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <form>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="exampleUserId" placeholder="id123">
-                                <label for="exampleUserId" class="form-label">User ID</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="exampleKeyAlias" placeholder="key123">
-                                <label for="exampleKeyAlias" class="form-label">Key Alias</label>
-                            </div>
-                            <button type="button" class="btn btn-primary" id="submitButton"
-                                onclick="offlineSubmit()">Submit</button>
-                            <script>
-                                function offlineSubmit() {
-                                    document.getElementById("qrcode1").innerHTML = "<div class=\"spinner-border text-primary\" role=\"status\"><span class=\"visually-hidden\">Loading...</span></div>";
-                                    document.getElementById("otpForm").classList.add("visually-hidden");
-                                    setTimeout(() => {
-                                        document.getElementById("qrcode1").innerHTML = "";
-                                        var qr_code = new QRCode(document.getElementById("qrcode1"), url);
-                                        document.getElementById("otpForm").classList.remove("visually-hidden");
-                                    }, 2000);
-                                }
-                            </script>
-                        </form>
-                        <div id="qrcode1" class="pt-md-3 pb-md-3" align="center"></div>
-                        <form id="otpForm" class="visually-hidden" action="https://login.anz.com/internetbanking">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="exampleOTP" placeholder="id123">
-                                <label for="exampleOTP" class="form-label">One-Time Password</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary" id="otpSubmitButton">Submit</button>
-                        </form>
-
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        crossorigin="anonymous"></script>
-
+      <div id="result"></div>
+     </div>
+  </div>
 </body>
+
+<footer>
+  <p class="mt-5 mb-3 text-muted" style="text-align:center">SeQRe 2021</p>
+</footer>
+
 
 </html>
