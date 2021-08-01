@@ -1,0 +1,7 @@
+- conglomerate into one stack named seqre-stack
+- windows local invoke
+    - With database working
+- Postman testing
+- Add proper error responses
+- Refactor db so that primary key is not combined
+- Documentation
