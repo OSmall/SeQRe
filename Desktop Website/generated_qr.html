@@ -20,39 +20,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
     <!-- Load controller.js -->
-    <script>
 
-    $(document).ready(function() {
-      $('#user-id-submitted').click(function() {
-        event.preventDefault();
 
-        
-        $.ajax({ // make an AJAX request
-            mode: 'no-cors',
-            type: "POST",
-            url: "https://z5qtvnd015.execute-api.ap-southeast-2.amazonaws.com/Prod/getCAuth/", 
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify( {
-              "id":document.getElementById("user_id").value,
-              "alias":document.getElementById("alias").value
-            }),
-            success: function(data) {
-              console.log(data);
-            }
-        });
-
-        console.log('user_id: ' + document.getElementById("user_id").value);
-        console.log('alias: ' + document.getElementById("alias").value);
-      });
-    });
-    </script>
-
+    
 </head>
 
 <body>
   <div class="container">
     <div class="content">
+
       <!-- NAVIGATION -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
@@ -82,26 +58,20 @@
           </div>
       </nav>
 
-      <!-- USER ID INPUT -->
-      <div id="user-id-screen" class="text-center" style="margin-top:100px">
-        <form id="user-id-form" class="form-signin">
-          <h2> Please enter your userID </h2>
-          <label for="inputUserID" class="sr-only"> </label>
-          <div class="input-group">
-            <input id="user_id" class="form-control" placeholder="userID" required="true" autofocus>
-          </div>
-          <div class="input-group">
-            <input id="alias" class="form-control" placeholder="alias" required="true" autofocus>
-          </div>
-          <div class="checkbox mb-3 mt-5">
-            <label><input type="checkbox" id="offline"> My phone is offline!</label>
-          </div>
-          <button class="btn btn-lg btn-primary mt-5" type="submit" id="user-id-submitted">Generate QR</button>
-        </form>
-      </div>
 
-      <div id="result"></div>
-     </div>
+      <!-- GENERATED QR -->
+      <div id="qr-screen">
+          <div align="center">
+              <h2 style="padding:20px">Please scan the QR code below:</h2>
+              <h4 id="display-user-id"></h4>
+              <div id="qrcode" style="padding:50px"></div>
+              <script type="text/javascript">
+                var user_id = document.getElementById('user_id')
+                new QRCode(document.getElementById("qrcode"), "hgey");
+              </script>
+          </div>
+      </div>
+    </div>
   </div>
 </body>
 

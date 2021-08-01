@@ -1,0 +1,48 @@
+﻿
+.container {
+  position: relative;
+  min-height: 100vh;
+  min-width:100%;
+}
+.content {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+footer {
+  position: absolute;
+  bottom: 10;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+
+
+/*Bootstrap*/
+.form-signin {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.form-control{
+  text-align: center;
+}
+
+.mt-5, .my-5 {
+    margin-top: 2rem!important;
+}
+
+.mb-3, .my-3 {
+    margin-bottom: 2rem!important;
+}
