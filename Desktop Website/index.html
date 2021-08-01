@@ -19,7 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-    <!-- Load controller.js -->
+    <!-- Main Script -->
     <script>
 
     $(document).ready(function() {
@@ -36,7 +36,8 @@
               "alias":document.getElementById("alias").value
             }),
             success: function(data) {
-              console.log(data);
+              localStorage['cauth'] = data['cAuth'];
+              window.location.href = "generated_qr.html"
             }
         });
 
@@ -54,7 +55,7 @@
       <!-- NAVIGATION -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
-              <a class="navbar-brand" href="#"><img src="media/logo+title.png" width="300"></a>
+              <a class="navbar-brand"  href="index.html" ><img src="media/logo+title.png" width="300"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                   data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                   aria-label="Toggle navigation">

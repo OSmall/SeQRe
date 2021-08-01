@@ -19,10 +19,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-    <!-- Load controller.js -->
-
-
-    
+    <!-- Load QR Code -->
+    <script>
+    $(window).load(function() {
+        data = localStorage['cauth']
+        new QRCode(document.getElementById("qrcode"), data);
+        console.log(data)
+    });
+    </script>
 </head>
 
 <body>
@@ -32,7 +36,7 @@
       <!-- NAVIGATION -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
-              <a class="navbar-brand" href="#"><img src="media/logo+title.png" width="300"></a>
+              <a class="navbar-brand" href="index.html"><img src="media/logo+title.png" width="300"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                   data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                   aria-label="Toggle navigation">
@@ -65,10 +69,6 @@
               <h2 style="padding:20px">Please scan the QR code below:</h2>
               <h4 id="display-user-id"></h4>
               <div id="qrcode" style="padding:50px"></div>
-              <script type="text/javascript">
-                var user_id = document.getElementById('user_id')
-                new QRCode(document.getElementById("qrcode"), "hgey");
-              </script>
           </div>
       </div>
     </div>
