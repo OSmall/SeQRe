@@ -45,4 +45,12 @@ def lambda_handler(event, context):
             "success": True,
             "cAuth": c_auth,
         }),
+
+        'headers': {
+        "Content-Type" : "application/json",
+        "Access-Control-Allow-Origin" : "*",
+        "Allow" : "GET, OPTIONS, POST",
+        "Access-Control-Allow-Methods" : "GET, OPTIONS, POST",
+        "Access-Control-Allow-Headers" : "*"
+      }
     }
