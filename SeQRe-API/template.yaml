@@ -8,7 +8,7 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 20
     Runtime: python3.8
     Environment:
       Variables:
@@ -25,7 +25,7 @@ Resources:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello_world
+            Path: /helloWorld
             Method: get
   
   CreateAccountFunction:
@@ -74,6 +74,24 @@ Resources:
           Properties:
             Path: /authenticateSession
             Method: POST
+  
+
+
+
+  GetPrimaryKeysFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_primary_keys/
+      Handler: get_primary_keys.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PrimaryKeyTable
+      Events:
+        GetCAuth:
+          Type: Api 
+          Properties:
+            Path: /getPrimaryKeys
+            Method: GET
 
   PrimaryKeyTable:
     Type: AWS::Serverless::SimpleTable

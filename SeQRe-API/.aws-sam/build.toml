@@ -29,4 +29,11 @@ source_md5 = ""
 packagetype = "Zip"
 functions = ["AuthenticateSessionFunction"]
 
+[function_build_definitions.8acf819d-11c6-4022-b299-031dae407a88]
+codeuri = "C:\\Users\\olive\\Documents\\GitHub\\SeQRe\\SeQRe-API\\functions\\get_primary_keys"
+runtime = "python3.8"
+source_md5 = ""
+packagetype = "Zip"
+functions = ["GetPrimaryKeysFunction"]
+
 [layer_build_definitions]
