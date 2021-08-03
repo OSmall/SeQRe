@@ -6,9 +6,9 @@ dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
 
-    primaryKeyTable = dynamodb.Table(os.environ['PRIMARY_KEY_TABLE'])
+    primary_key_table = dynamodb.Table(os.environ['PRIMARY_KEY_TABLE'])
 
-    keys = primaryKeyTable.scan()
+    keys = primary_key_table.scan()
 
 
     return {
@@ -20,7 +20,7 @@ def lambda_handler(event, context):
         },
         "body": json.dumps({
             "success": True,
-            "keys": keys,
+            "keys": keys
         }),
         'headers': {
             "Content-Type" : "application/json",

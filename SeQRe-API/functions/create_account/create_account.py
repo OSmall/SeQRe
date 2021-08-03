@@ -8,11 +8,11 @@ def lambda_handler(event, context):
     body = json.loads(event['body'])
     id = body['id']
     alias = body['alias']
-    pubKey = body['pubKey']
+    pub_key = body['pubKey']
 
-    primaryKeyTable = dynamodb.Table(os.environ['PRIMARY_KEY_TABLE'])
+    primary_key_table = dynamodb.Table(os.environ['PRIMARY_KEY_TABLE'])
     output = event
-    primaryKeyTable.put_item(Item={"id+alias": id + '.' + alias, "pubKey": pubKey})
+    primary_key_table.put_item(Item={"id+alias": id + '.' + alias, "pubKey": pub_key})
 
 
     return {

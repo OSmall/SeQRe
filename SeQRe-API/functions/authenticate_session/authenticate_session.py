@@ -16,20 +16,20 @@ def lambda_handler(event, context):
 
     output = ''
 
-    sessionKeyTable = dynamodb.Table(os.environ['SESSION_KEY_TABLE'])
+    session_key_table = dynamodb.Table(os.environ['SESSION_KEY_TABLE'])
 
     # row = sessionKeyTable.query(KeyConditionExpression=Key('id').eq(id))['Items'][0]
-    row = sessionKeyTable.get_item(Key={'id': id})['Item']
+    row = session_key_table.get_item(Key={'id': id})['Item']
 
 
-    sessionKey = row['key']
+    session_key = row['key']
     length = int(row['length'])
 
-    sha256 = base64.b64encode(SHA256.new(base64.b64decode(sessionKey.encode('ascii'))).digest()).decode('ascii')
+    sha256 = base64.b64encode(SHA256.new(base64.b64decode(session_key.encode('ascii'))).digest()).decode('ascii')
     output = otp == sha256[:length]
 
     if output:
-        sessionKeyTable.update_item(Key={"id": id}, UpdateExpression="set authenticated = :b", ExpressionAttributeValues={':b': True})
+        session_key_table.update_item(Key={"id": id}, UpdateExpression="set authenticated = :b", ExpressionAttributeValues={':b': True})
 
     return {
         "statusCode": 200,
