@@ -12,9 +12,8 @@ Globals:
     Runtime: python3.8
     Environment:
       Variables:
-        PRIMARY_KEY_TABLE: !Ref PrimaryKeyTable
-        SESSION_KEY_TABLE: !Ref SessionKeyTable
-
+        PRIMARY_KEY_TABLE: "SeQRe-API-PrimaryKeyTable-FF9HY45O038J"
+        SESSION_KEY_TABLE: "SeQRe-API-SessionKeyTable-V2OS9JXT3TRG"
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -76,8 +75,7 @@ Resources:
             Method: POST
   
 
-
-
+# --------------Test functions--------------
   GetPrimaryKeysFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -93,6 +91,23 @@ Resources:
             Path: /getPrimaryKeys
             Method: GET
 
+  TestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/test/
+      Handler: test.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PrimaryKeyTable
+      Events:
+        GetCAuth:
+          Type: Api
+          Properties:
+            Path: /test
+            Method: GET
+
+
+# --------------Tables--------------
   PrimaryKeyTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
