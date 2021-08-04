@@ -2,7 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   SeQRe-API
-
   Sample SAM Template for SeQRe-API
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
@@ -14,19 +13,10 @@ Globals:
       Variables:
         PRIMARY_KEY_TABLE: "SeQRe-API-PrimaryKeyTable-FF9HY45O038J"
         SESSION_KEY_TABLE: "SeQRe-API-SessionKeyTable-V2OS9JXT3TRG"
+
+
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: functions/hello_world/
-      Handler: hello_world.lambda_handler
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /helloWorld
-            Method: get
-  
+# ------------- Functions -------------
   CreateAccountFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -76,6 +66,18 @@ Resources:
   
 
 # --------------Test functions--------------
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: functions/hello_world/
+      Handler: hello_world.lambda_handler
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /helloWorld
+            Method: get
+
   GetPrimaryKeysFunction:
     Type: AWS::Serverless::Function
     Properties:
