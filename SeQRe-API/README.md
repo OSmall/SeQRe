@@ -1,6 +1,5 @@
 
-<!-- Best results viewed with a Markdown previewer. If using VSCode, right click this tab and select "
-"Open Preview" -->
+<!-- Best results viewed with a Markdown parser. If using VSCode, right click this tab and select "Open Preview" -->
 
 # Pre-requisites
 
@@ -80,3 +79,21 @@ From here, testing shall proceed. [Postman](https://www.postman.com/) is a very 
 | Save arguments to configuration file | Y |
 | SAM configuration file | samconfig.toml |
 | SAM configuration environment | default |
+
+# Developing
+
+## IDE
+
+- Visual Studio Code was used for the majority of development. The only thing to note is to choose the correct Python interpreter in the lower-left to get code completion.
+
+## Editing template.yaml
+
+This is the document that defines the rules to creates the entire software stack on AWS. Editing this is useful when __creating another function__. Simply, copy one of the other functions and make the following changes.
+- Name: please use correct naming conventions.
+- CodeUri: create a new folder in the __functions__ folder that contains a __.py file__ and __requirements.txt__ which contains the pip library requirements for the function.
+- Policies: apply the policies so the function can access the appropriate database tables. Principle of least privilege.
+- Event name: similar to API endpoint.
+- Path: API endpoint.
+
+## Stuck?
+The [AWS Serverless Application Model Developer Guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide) has useful information.
