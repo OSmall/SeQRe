@@ -36,4 +36,11 @@ def lambda_handler(event, context):
         "body": json.dumps({
             "success": output
         }),
+        'headers': {
+            "Content-Type" : "application/json",
+            "Access-Control-Allow-Origin" : "*",
+            "Allow" : "GET, OPTIONS, POST",
+            "Access-Control-Allow-Methods" : "GET, OPTIONS, POST",
+            "Access-Control-Allow-Headers" : "*"
+        }
     }
