@@ -8,6 +8,19 @@ dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
     
+    if event['httpMethod'] == 'OPTIONS':
+        # https://enable-cors.org/server_awsapigateway.html
+        # https://www.test-cors.org/
+        return {
+            "statusCode": 200,
+            'headers': {
+                "X-Requested-With": "*",
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "OPTIONS, POST"
+            }
+        }
+
     try:
 
         body = json.loads(event['body'])
@@ -41,21 +54,15 @@ def lambda_handler(event, context):
 
         return {
             "statusCode": 200,
-            'headers': {
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-            },
             "body": json.dumps({
                 "success": True,
                 "cAuth": c_auth,
             }),
             'headers': {
-                "Content-Type" : "application/json",
+                "X-Requested-With": "*",
+                "Access-Control-Allow-Headers" : "*",
                 "Access-Control-Allow-Origin" : "*",
-                "Allow" : "GET, OPTIONS, POST",
-                "Access-Control-Allow-Methods" : "GET, OPTIONS, POST",
-                "Access-Control-Allow-Headers" : "*"
+                "Access-Control-Allow-Methods" : "OPTIONS, POST"
             }
         }
         

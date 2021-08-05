@@ -15,7 +15,16 @@ Globals:
         SESSION_KEY_TABLE: "SeQRe-API-SessionKeyTable-V2OS9JXT3TRG"
 
 
+
 Resources:
+# ------------- API -------------
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+
+
+
 # ------------- Functions -------------
   CreateAccountFunction:
     Type: AWS::Serverless::Function
@@ -26,11 +35,12 @@ Resources:
         - DynamoDBCrudPolicy:
             TableName: !Ref PrimaryKeyTable
       Events:
-        CreateAccount:
+        Post:
           Type: Api
           Properties:
             Path: /createAccount
             Method: POST
+            RestApiId: !Ref ApiGatewayApi
 
   GetCAuthFunction:
     Type: AWS::Serverless::Function
@@ -43,11 +53,18 @@ Resources:
         - DynamoDBCrudPolicy:
             TableName: !Ref SessionKeyTable
       Events:
-        GetCAuth:
-          Type: Api 
+        Post:
+          Type: Api
           Properties:
             Path: /getCAuth
             Method: POST
+            RestApiId: !Ref ApiGatewayApi
+        Options:
+          Type: Api
+          Properties:
+            Path: /getCAuth
+            Method: OPTIONS
+            RestApiId: !Ref ApiGatewayApi
 
   AuthenticateSessionFunction:
     Type: AWS::Serverless::Function
@@ -58,11 +75,18 @@ Resources:
         - DynamoDBCrudPolicy:
             TableName: !Ref SessionKeyTable
       Events:
-        GetCAuth:
+        Post:
           Type: Api 
           Properties:
             Path: /authenticateSession
             Method: POST
+            RestApiId: !Ref ApiGatewayApi
+        Options:
+          Type: Api
+          Properties:
+            Path: /authenticateSession
+            Method: OPTIONS
+            RestApiId: !Ref ApiGatewayApi
   
 
 # --------------Test functions--------------
@@ -72,11 +96,12 @@ Resources:
       CodeUri: functions/hello_world/
       Handler: hello_world.lambda_handler
       Events:
-        HelloWorld:
+        Get:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /helloWorld
             Method: GET
+            RestApiId: !Ref ApiGatewayApi
 
   GetPrimaryKeysFunction:
     Type: AWS::Serverless::Function
@@ -87,11 +112,12 @@ Resources:
         - DynamoDBCrudPolicy:
             TableName: !Ref PrimaryKeyTable
       Events:
-        GetCAuth:
+        Get:
           Type: Api 
           Properties:
             Path: /getPrimaryKeys
             Method: GET
+            RestApiId: !Ref ApiGatewayApi
 
   TestFunction:
     Type: AWS::Serverless::Function
@@ -102,11 +128,12 @@ Resources:
         - DynamoDBCrudPolicy:
             TableName: !Ref PrimaryKeyTable
       Events:
-        GetCAuth:
+        Get:
           Type: Api
           Properties:
             Path: /test
             Method: GET
+            RestApiId: !Ref ApiGatewayApi
 
 
 # --------------Tables--------------
@@ -129,9 +156,9 @@ Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  # HelloWorldApi:
+  #   Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+  #   Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
   HelloWorldFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn

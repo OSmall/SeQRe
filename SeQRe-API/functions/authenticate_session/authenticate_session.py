@@ -10,6 +10,17 @@ dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
     
+    if event['httpMethod'] == 'OPTIONS':
+        return {
+            "statusCode": 200,
+            'headers': {
+                "X-Requested-With": "*",
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "OPTIONS, POST"
+            }
+        }
+
     body = json.loads(event['body'])
     id = body['id']
     otp = body['otp']
@@ -37,10 +48,9 @@ def lambda_handler(event, context):
             "success": output
         }),
         'headers': {
-            "Content-Type" : "application/json",
+            "X-Requested-With": "*",
+            "Access-Control-Allow-Headers" : "*",
             "Access-Control-Allow-Origin" : "*",
-            "Allow" : "GET, OPTIONS, POST",
-            "Access-Control-Allow-Methods" : "GET, OPTIONS, POST",
-            "Access-Control-Allow-Headers" : "*"
+            "Access-Control-Allow-Methods" : "OPTIONS, POST"
         }
     }
