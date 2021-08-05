@@ -1,2 +1,0 @@
-pycryptodome==3.10.1
-boto3==1.17.75
