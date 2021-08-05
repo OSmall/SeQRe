@@ -28,20 +28,29 @@
 
         
         $.ajax({ // make an AJAX request
-            mode: 'no-cors',
-            type: "POST",
-            url: "https://4ds1vqhwx2.execute-api.ap-southeast-2.amazonaws.com/Prod/getCAuth/", 
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify( {
-              "id":document.getElementById("user_id").value,
-              "alias":document.getElementById("alias").value
-            }),
-            success: function(data) {
-              localStorage['cauth'] = data['cAuth'];
-              window.location.href = "generated_qr.html"
+          type: "POST",
+          url: "https://vse8by8x6l.execute-api.ap-southeast-2.amazonaws.com/Prod/getCAuth/", 
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            "id":document.getElementById("user_id").value,
+            "alias":document.getElementById("alias").value
+          }),
+
+          success: function(data) {
+            localStorage['cauth'] = data['cAuth'];
+            window.location.href = "generated_qr.html"
+          }/*,
+
+          error : function(xhr, textStatus, errorThrown ) {
+            if (xhr.status == 500) {
+                //handle error
+            } else {
+                console.log('page broken')
             }
+          }*/
         });
+
 
         console.log('user_id: ' + document.getElementById("user_id").value);
         console.log('alias: ' + document.getElementById("alias").value);
