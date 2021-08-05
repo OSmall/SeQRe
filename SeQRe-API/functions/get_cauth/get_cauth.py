@@ -14,10 +14,8 @@ def lambda_handler(event, context):
         return {
             "statusCode": 200,
             'headers': {
-                "X-Requested-With": "*",
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "OPTIONS, POST"
+                "Access-Control-Allow-Headers" : "content-type",
+                "Access-Control-Allow-Origin" : "*"
             }
         }
 
@@ -59,10 +57,8 @@ def lambda_handler(event, context):
                 "cAuth": c_auth,
             }),
             'headers': {
-                "X-Requested-With": "*",
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "OPTIONS, POST"
+                "Access-Control-Allow-Headers" : "content-type",
+                "Access-Control-Allow-Origin" : "*"
             }
         }
         
