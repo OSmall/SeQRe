@@ -25,7 +25,8 @@ Desktop Website
 		- A POST request is made to the API
 		- A JSON response containing an encrypted cAuth is provided
 		- A QR containing the encrypted cAuth is displayed
-		- In future iterations, this QR will be decrypted locally on a users primary device 
+		- In future iterations, this QR will be decrypted locally on a users primary device
+- In the future, the webpage will be hosted on a server, but for now it is run locally and will access the remote AWS API. Simply open index.html in a browser.
 
 
 NOTE: {userID: 'Oliver', alias: 'iPhone 11'} is a registered credential
