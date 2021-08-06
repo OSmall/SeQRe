@@ -21,6 +21,7 @@ def lambda_handler(event, context):
 
     body = json.loads(event['body'])
     id = body['id']
+    alias = body['alias']
     otp = body['otp']
 
     output = ''

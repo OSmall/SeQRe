@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -19,14 +19,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-    <!-- Load QR Code -->
-    <script>
-    $(window).load(function() {
-        data = localStorage['cauth']
-        new QRCode(document.getElementById("qrcode"), data);
-        console.log(data)
-    });
-    </script>
 </head>
 
 <body>
@@ -48,7 +40,7 @@
                           <a class="nav-link active" href="index.html" href="#">Generate QR</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link active" href="download.html">Download</a>
+                          <a class="nav-link active" href="other.html">Download</a>
                       </li>
                       <li class="nav-item">
                           <a class="nav-link active" href="#">About</a>
@@ -58,15 +50,6 @@
           </div>
       </nav>
 
-
-      <!-- GENERATED QR -->
-      <div id="qr-screen">
-          <div align="center">
-              <h2 style="padding:20px">Please scan the QR code below:</h2>
-              <h4 id="display-user-id"></h4>
-              <div id="qrcode" style="padding:50px"></div>
-          </div>
-      </div>
     </div>
   </div>
 </body>

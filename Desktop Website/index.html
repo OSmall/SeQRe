@@ -40,15 +40,16 @@
           success: function(data) {
             localStorage['cauth'] = data['cAuth'];
             window.location.href = "generated_qr.html"
-          }/*,
+          },
 
           error : function(xhr, textStatus, errorThrown ) {
             if (xhr.status == 500) {
                 //handle error
             } else {
-                console.log('page broken')
+                console.log('Error 500')
+                alert('There was an error. Please re-enter your credentials.')
             }
-          }*/
+          }
         });
 
 
@@ -78,16 +79,12 @@
                           <a class="nav-link active" href="index.html" href="#">Generate QR</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link active" href="other.html">Download</a>
+                          <a class="nav-link active" href="download.html">Download</a>
                       </li>
                       <li class="nav-item">
                           <a class="nav-link active" href="#">About</a>
                       </li>
                   </ul>
-                  <form class="d-flex">
-                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                      <button class="btn btn-outline-primary" type="submit">Search</button>
-                  </form>
               </div>
           </div>
       </nav>

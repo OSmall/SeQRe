@@ -27,6 +27,11 @@ body {
 
 
 /*Bootstrap*/
+
+.btn {
+  background-color: #1D6999;
+  color: white;
+}
 .form-signin {
     width: 100%;
     max-width: 400px;
