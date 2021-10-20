@@ -10,26 +10,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnTakePicture;
-    TextView txtResult;
+    Button btnStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initViews();
-    }
-
-    private void initViews() {
-        txtResult = findViewById(R.id.txtResultsBody);
-        btnTakePicture = findViewById(R.id.camera_capture_button);
-        btnTakePicture.setOnClickListener(this);
+        btnStart = findViewById(R.id.start_button);
+        btnStart.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.camera_capture_button) {
-            startActivity(new Intent(MainActivity.this, QRCodeActivity.class));
+        if (v.getId() == R.id.start_button) {
+            startActivity(new Intent(MainActivity.this, ScanQRCodeActivity.class));
         }
     }
 }
