@@ -1,4 +1,4 @@
 **/.vscode/*
 **/.vs/*
 **/.aws-sam/**
-/venv
+/venv*
