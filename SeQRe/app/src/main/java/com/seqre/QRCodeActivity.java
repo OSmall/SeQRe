@@ -1,4 +1,4 @@
-package com.seqre.androidapp;
+package com.seqre;
 
 import android.Manifest;
 import android.content.Context;
@@ -29,9 +29,10 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class QRScanning extends AppCompatActivity implements View.OnClickListener {
+public class QRCodeActivity extends AppCompatActivity implements View.OnClickListener {
+
     Button btnOpenCamera;
-    TextView txtResultsHeader;
+    TextView txtResultBody;
 
     private BarcodeDetector detector;
     private Uri imageUri;
@@ -44,17 +45,14 @@ public class QRScanning extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_home);
+        setContentView(R.layout.activity_barcode_picture);
 
-        btnOpenCamera = findViewById(R.id.camera_capture_button);
-        txtResultsHeader = findViewById(R.id.txtResultsHeader);
-        txtResultsHeader.setText("hey");
-        btnOpenCamera.setOnClickListener(this);
+        initViews();
 
         if (savedInstanceState != null) {
             if (imageUri != null) {
                 imageUri = Uri.parse(savedInstanceState.getString(SAVED_INSTANCE_URI));
-                txtResultsHeader.setText(savedInstanceState.getString(SAVED_INSTANCE_RESULT));
+                txtResultBody.setText(savedInstanceState.getString(SAVED_INSTANCE_RESULT));
             }
         }
 
@@ -63,28 +61,34 @@ public class QRScanning extends AppCompatActivity implements View.OnClickListene
                 .build();
 
         if (!detector.isOperational()) {
-            txtResultsHeader.setText("initialisation failed");
+            txtResultBody.setText("Detector initialisation hehe");
+            return;
         }
+    }
+
+    private void initViews() {
+        txtResultBody = findViewById(R.id.txtResultsBody);
+        btnOpenCamera = findViewById(R.id.btnOpenCamera);
+        btnOpenCamera.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.camera_capture_button) {
-            ActivityCompat.requestPermissions(QRScanning.this, new
-                    String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        if (v.getId() == R.id.btnOpenCamera) {
+            ActivityCompat.requestPermissions(QRCodeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
         }
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                takeBarcodePicture();
-            } else {
-                Toast.makeText(getApplicationContext(), "Permission Denied!", Toast.LENGTH_SHORT).show();
-            }
+        switch (requestCode) {
+            case REQUEST_CAMERA_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    takeBarcodePicture();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permission Denied!", Toast.LENGTH_SHORT).show();
+                }
         }
     }
 
@@ -93,26 +97,27 @@ public class QRScanning extends AppCompatActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             launchMediaScanIntent();
-            try {`
+            try {
+
+
                 Bitmap bitmap = decodeBitmapUri(this, imageUri);
                 if (detector.isOperational() && bitmap != null) {
                     Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                     SparseArray<Barcode> barcodes = detector.detect(frame);
                     for (int index = 0; index < barcodes.size(); index++) {
                         Barcode code = barcodes.valueAt(index);
-                        txtResultsHeader.setText(txtResultsHeader.getText() + "\n" + code.displayValue + "\n");
+                        txtResultBody.setText(txtResultBody.getText() + "\n" + code.displayValue + "\n");
 
                         int type = barcodes.valueAt(index).valueFormat;
                         if (type == Barcode.TEXT) {
                             Log.i(TAG, code.displayValue);
-                            break;
                         }
                     }
                     if (barcodes.size() == 0) {
-                        txtResultsHeader.setText("No barcode could be detected. Please try again.");
+                        txtResultBody.setText("No barcode could be detected. Please try again.");
                     }
                 } else {
-                    txtResultsHeader.setText("Detector initialisation failed");
+                    txtResultBody.setText("Detector initialisation failed");
                 }
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Failed to load Image", Toast.LENGTH_SHORT)
@@ -125,7 +130,7 @@ public class QRScanning extends AppCompatActivity implements View.OnClickListene
     private void takeBarcodePicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photo = new File(Environment.getExternalStorageDirectory(), "pic.jpg");
-        imageUri = FileProvider.getUriForFile(QRScanning.this,
+        imageUri = FileProvider.getUriForFile(QRCodeActivity.this,
                 BuildConfig.APPLICATION_ID + ".provider", photo);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, CAMERA_REQUEST);
@@ -135,7 +140,7 @@ public class QRScanning extends AppCompatActivity implements View.OnClickListene
     protected void onSaveInstanceState(Bundle outState) {
         if (imageUri != null) {
             outState.putString(SAVED_INSTANCE_URI, imageUri.toString());
-            outState.putString(SAVED_INSTANCE_RESULT, txtResultsHeader.getText().toString());
+            outState.putString(SAVED_INSTANCE_RESULT, txtResultBody.getText().toString());
         }
         super.onSaveInstanceState(outState);
     }

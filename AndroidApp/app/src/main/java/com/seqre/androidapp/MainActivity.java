@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.seqre.androidapp.databinding.ActivityMainBinding;
 import android.content.Intent;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -41,13 +42,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        TextView txt = findViewById(R.id.txtResultsHeader);
+        txt.setText("Working");
 
         switch (v.getId()) {
             case R.id.camera_capture_button:
                 startActivity(new Intent(MainActivity.this, QRScanning.class));
+
                 break;
         }
-
     }
-
 }
