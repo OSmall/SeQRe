@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    //branding
+    <color name="main_color">#FF1D6999</color>
+    <color name="main_color_variant">#FF42B5FC</color>
+    <color name="secondary_color">#FFE6D3BA</color>
+    <color name="secondary_color_variant">#FFFFBC5E</color>
+    <color name="brand_black">#FF4D5961</color>
 </resources>

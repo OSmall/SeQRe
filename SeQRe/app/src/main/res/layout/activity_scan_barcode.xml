@@ -17,9 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="No Barcode Detected"
+        android:layout_marginTop="24dp"
+        android:text="No QR Code Detected"
         android:textColor="#ffffff"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/btnAction"

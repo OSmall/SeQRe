@@ -25,6 +25,12 @@ import java.io.IOException;
 
 public class ScanQRCodeActivity extends AppCompatActivity {
 
+    //QR scanning code referenced from https://www.deepcrazyworld.com/create-a-qr-code-scanner-android-app/
+    //Original Author: DeepCrazyWorld
+    //Refactored to fit purpose of QR authentication
+
+
+    //local variables
     SurfaceView surfaceView;
     TextView txtBarcodeValue;
     private BarcodeDetector barcodeDetector;
@@ -33,20 +39,20 @@ public class ScanQRCodeActivity extends AppCompatActivity {
     Button btnAction;
     String intentData = "";
 
-
+    //constructor
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //set activity view
         setContentView(R.layout.activity_scan_barcode);
 
-        initViews();
-    }
-
-    private void initViews() {
+        //create local variables
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
         btnAction = findViewById(R.id.btnAction);
 
+        //create button listener
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,10 +63,12 @@ public class ScanQRCodeActivity extends AppCompatActivity {
         });
     }
 
+
     private void initialiseDetectorsAndSources() {
 
         Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
+        //initialize barcode / camera componenets
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
@@ -70,6 +78,7 @@ public class ScanQRCodeActivity extends AppCompatActivity {
                 .setAutoFocusEnabled(true) //you should add this feature
                 .build();
 
+        //initialize camera surface
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -86,6 +95,8 @@ public class ScanQRCodeActivity extends AppCompatActivity {
                 }
             }
 
+
+            //required overrides
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             }
@@ -97,16 +108,17 @@ public class ScanQRCodeActivity extends AppCompatActivity {
         });
 
 
+        //process for barcodeDetector
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
                 Toast.makeText(getApplicationContext(), "barcode scanner has stopped", Toast.LENGTH_SHORT).show();
             }
 
+            //detection handling
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 SparseArray<Barcode> barcodes = detections.getDetectedItems();
-                txtBarcodeValue.setText("working");
                 if (barcodes.size() != 0) {
                     txtBarcodeValue.post(new Runnable() {
                         @Override
