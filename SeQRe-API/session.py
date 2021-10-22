@@ -9,6 +9,8 @@ dynamodb = boto3.resource('dynamodb')
 def lambda_handler(event, context):
     
     # check headers
+    if event['headers'] == None:
+        return error(400, "'seqre-id' and 'seqre-alias' headers do not exist")
     if 'seqre-id' not in event['headers']:
         return error(400, "'seqre-id' header does not exist")
     if 'seqre-alias' not in event['headers']:
