@@ -1,55 +1,102 @@
-{
-    "resource": "/session",
-    "path": "/session",
-    "httpMethod": "GET",
-    "headers": {
-    "seqre-id": "Oliver",
-    "seqre-alias": "iPhone11"
-    },
-    "multiValueHeaders": {
-    "seqre-id": [
-        "Oliver"
-    ],
-    "seqre-alias": [
-        "iPhone11"
-    ]
-    },
-    "queryStringParameters": null,
-    "multiValueQueryStringParameters": null,
-    "pathParameters": null,
-    "stageVariables": null,
-    "requestContext": {
-    "resourceId": "mgmn5d",
-    "resourcePath": "/session",
-    "httpMethod": "GET",
-    "extendedRequestId": "HiwKoGjbywMFhJw=",
-    "requestTime": "21/Oct/2021:05:27:31 +0000",
-    "path": "/session",
-    "accountId": "092806595110",
-    "protocol": "HTTP/1.1",
-    "stage": "test-invoke-stage",
-    "domainPrefix": "testPrefix",
-    "requestTimeEpoch": 1634794051878,
-    "requestId": "6b7e7ac8-3db2-4c74-9266-9f8360953719",
-    "identity": {
-        "cognitoIdentityPoolId": null,
-        "cognitoIdentityId": null,
-        "apiKey": "test-invoke-api-key",
-        "principalOrgId": null,
-        "cognitoAuthenticationType": null,
-        "userArn": "arn:aws:iam::092806595110:user/oliver.small",
-        "apiKeyId": "test-invoke-api-key-id",
-        "userAgent": "aws-internal/3 aws-sdk-java/1.12.76 Linux/5.4.134-73.228.amzn2int.x86_64 OpenJDK_64-Bit_Server_VM/25.302-b08 java/1.8.0_302 vendor/Oracle_Corporation cfg/retry-mode/standard",
+[
+    {
+        "resource": "/session",
+        "path": "/session",
+        "httpMethod": "GET",
+        "headers": {
+        "seqre-id": "Oliver",
+        "seqre-alias": "iPhone11"
+        },
+        "multiValueHeaders": {
+        "seqre-id": [
+            "Oliver"
+        ],
+        "seqre-alias": [
+            "iPhone11"
+        ]
+        },
+        "queryStringParameters": null,
+        "multiValueQueryStringParameters": null,
+        "pathParameters": null,
+        "stageVariables": null,
+        "requestContext": {
+        "resourceId": "mgmn5d",
+        "resourcePath": "/session",
+        "httpMethod": "GET",
+        "extendedRequestId": "HiwKoGjbywMFhJw=",
+        "requestTime": "21/Oct/2021:05:27:31 +0000",
+        "path": "/session",
         "accountId": "092806595110",
-        "caller": "AIDARLG5UIITCLTADEHDM",
-        "sourceIp": "test-invoke-source-ip",
-        "accessKey": "ASIARLG5UIITMGYLT3GZ",
-        "cognitoAuthenticationProvider": null,
-        "user": "AIDARLG5UIITCLTADEHDM"
+        "protocol": "HTTP/1.1",
+        "stage": "test-invoke-stage",
+        "domainPrefix": "testPrefix",
+        "requestTimeEpoch": 1634794051878,
+        "requestId": "6b7e7ac8-3db2-4c74-9266-9f8360953719",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "cognitoIdentityId": null,
+            "apiKey": "test-invoke-api-key",
+            "principalOrgId": null,
+            "cognitoAuthenticationType": null,
+            "userArn": "arn:aws:iam::092806595110:user/oliver.small",
+            "apiKeyId": "test-invoke-api-key-id",
+            "userAgent": "aws-internal/3 aws-sdk-java/1.12.76 Linux/5.4.134-73.228.amzn2int.x86_64 OpenJDK_64-Bit_Server_VM/25.302-b08 java/1.8.0_302 vendor/Oracle_Corporation cfg/retry-mode/standard",
+            "accountId": "092806595110",
+            "caller": "AIDARLG5UIITCLTADEHDM",
+            "sourceIp": "test-invoke-source-ip",
+            "accessKey": "ASIARLG5UIITMGYLT3GZ",
+            "cognitoAuthenticationProvider": null,
+            "user": "AIDARLG5UIITCLTADEHDM"
+        },
+        "domainName": "testPrefix.testDomainName",
+        "apiId": "v3sgg66r6l"
+        },
+        "body": null,
+        "isBase64Encoded": false
     },
-    "domainName": "testPrefix.testDomainName",
-    "apiId": "v3sgg66r6l"
-    },
-    "body": null,
-    "isBase64Encoded": false
-}
+    {
+        "resource": "/session",
+        "path": "/session",
+        "httpMethod": "POST",
+        "headers": null,
+        "multiValueHeaders": null,
+        "queryStringParameters": null,
+        "multiValueQueryStringParameters": null,
+        "pathParameters": null,
+        "stageVariables": null,
+        "requestContext": {
+        "resourceId": "mgmn5d",
+        "resourcePath": "/session",
+        "httpMethod": "POST",
+        "extendedRequestId": "HnXuOEOzywMF3UA=",
+        "requestTime": "22/Oct/2021:15:05:11 +0000",
+        "path": "/session",
+        "accountId": "092806595110",
+        "protocol": "HTTP/1.1",
+        "stage": "test-invoke-stage",
+        "domainPrefix": "testPrefix",
+        "requestTimeEpoch": 1634915111627,
+        "requestId": "b2d07c6a-f7f5-4ff3-a99a-4db9cd45eb08",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "cognitoIdentityId": null,
+            "apiKey": "test-invoke-api-key",
+            "principalOrgId": null,
+            "cognitoAuthenticationType": null,
+            "userArn": "arn:aws:iam::092806595110:user/oliver.small",
+            "apiKeyId": "test-invoke-api-key-id",
+            "userAgent": "aws-internal/3 aws-sdk-java/1.12.76 Linux/5.4.134-73.228.amzn2int.x86_64 OpenJDK_64-Bit_Server_VM/25.302-b08 java/1.8.0_302 vendor/Oracle_Corporation cfg/retry-mode/standard",
+            "accountId": "092806595110",
+            "caller": "AIDARLG5UIITCLTADEHDM",
+            "sourceIp": "test-invoke-source-ip",
+            "accessKey": "ASIARLG5UIITIN7L6LNC",
+            "cognitoAuthenticationProvider": null,
+            "user": "AIDARLG5UIITCLTADEHDM"
+        },
+        "domainName": "testPrefix.testDomainName",
+        "apiId": "v3sgg66r6l"
+        },
+        "body": "{\n    \"otp\": \"134tgbj\"\n}",
+        "isBase64Encoded": false
+    }
+]
