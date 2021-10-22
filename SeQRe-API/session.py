@@ -8,13 +8,19 @@ dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
     
+    # check headers
+    if 'seqre-id' not in event['headers']:
+        return error(400, "'seqre-id' header does not exist")
+    if 'seqre-alias' not in event['headers']:
+        return error(400, "'seqre-alias' header does not exist")
+    
+    # create variables
+    id = event['headers']['seqre-id']
+    alias = event['headers']['seqre-alias']
+    keys_table = dynamodb.Table(os.environ['KEYS_TABLE'])
+
     if event['httpMethod'] == 'GET':
-        # create variables
-        id = event['headers']['seqre-id']
-        alias = event['headers']['seqre-alias']
-        keys_table = dynamodb.Table(os.environ['KEYS_TABLE'])
-        
-        # talk to the table
+        # fetch pubKey from table
         table_response = keys_table.get_item(Key={
             'id': id,
             'alias': alias
@@ -50,8 +56,15 @@ def lambda_handler(event, context):
         return response(200, {'qrData': c_auth})
     
     if event['httpMethod'] == 'POST':
-        # TODO
-        return response(200, None)
+        body = json.loads(event['body'])
+
+        # check body for otp
+        if 'otp' not in body:
+            return error(400, 'missing otp in body')
+        
+        otp = body['otp']
+
+        return response(200, {'otp': otp})
 
 
 def response(statusCode, body):
