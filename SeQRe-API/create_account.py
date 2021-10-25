@@ -23,8 +23,8 @@ def lambda_handler(event, context):
     body = json.loads(event['body'])
 
     # create variables
-    id = event['headers']['seqre-id']
-    alias = event['headers']['seqre-alias']
+    id = str(event['headers']['seqre-id'])
+    alias = str(event['headers']['seqre-alias'])
 
     accounts_table = dynamodb.Table(os.environ['ACCOUNTS_TABLE'])
     keys_table = dynamodb.Table(os.environ['KEYS_TABLE'])
