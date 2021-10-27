@@ -44,7 +44,7 @@ def lambda_handler(event, context):
             'alias': alias
         }, UpdateExpression='SET sessionKey=:session_key, authenticated=:authenticated, sessionKeyCreatedTime=:time, otpLength=:length',
         ExpressionAttributeValues={
-            ':session_key': base64.b64encode(session_key).decode('ascii'),
+            ':session_key': base64.b64encode(session_key).decode(),
             ':authenticated': False,
             ':time': int(round(time.time() * 1000)),
             ':length': otp_length
@@ -54,7 +54,7 @@ def lambda_handler(event, context):
         rsa = RSA.import_key(pub_key)
         cipher_rsa = PKCS1_OAEP.new(rsa)
         c_auth = session_key + otp_length.to_bytes(1, 'big')
-        c_auth = base64.b64encode(cipher_rsa.encrypt(c_auth)).decode('ascii')
+        c_auth = base64.b64encode(cipher_rsa.encrypt(c_auth)).decode()
 
         return response(200, {'qrData': c_auth})
     
@@ -95,7 +95,7 @@ def lambda_handler(event, context):
         otp_length = int(table_response['Item']['otpLength'])
         key_created_time = int(table_response['Item']['sessionKeyCreatedTime'])
 
-        session_key_hash = base64.b64encode(SHA256.new(base64.b64decode(session_key.encode('ascii'))).digest()).decode('ascii')
+        session_key_hash = base64.b64encode(SHA256.new(base64.b64decode(session_key.encode())).digest()).decode()
 
         # error if sessionKey is too old (30 seconds)
         if int(round(time.time() * 1000)) - key_created_time > 30000:
