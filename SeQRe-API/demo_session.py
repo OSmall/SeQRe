@@ -9,16 +9,16 @@ private_key = b'MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC8nRTnRduk1ADf
 private_key = base64.b64decode(private_key)
 private_key = RSA.import_key(private_key)
 
-c_auth = "FHpCfya2ntyF0tL7Uq4UTuMlx5ZPOrZEbUz8Ca+Nl0oX8m2rM8L3NbUL1O1uTH+ZUJIr6izouiEeLKAvJQkN9pdAlqQvD+OYv3tvoFdd4/IQE52Fpv7SVj7QKl8FVX5oHgjua1txMIZEIfguFBIqWSBlxI6Nhn01Jfwhy+JZjhOwp39OBX3p14T2TPd73ISCK4a0qLUEwnvyCsrX11M3EJH9+YSaDNtqdPUR3FwfS6jmwb4fjlcXGcEqdOkUqSy1kX33KL07orf/kbS7ee3iZcqivUdX27ciVgnDeJGIPkxhHqAlS2QY6bNMtaIc13psNNr7O3TsnZwR869fBgDHaA=="
-base64_bytes = c_auth.encode('ascii')
+c_auth = "hAqEXyB+gAvkz1raRAG76IBFRsjGqGIfISE2pPsMDq31LlnrrqBPi+PaYaIsMc4v4XNZtSuk0W08zG7Iuw9Fvamta64TtokWUUXcUXYQXEgbV4bR0NuTqoxlf86D2kCQokyGINlyvd72j6seKtAavxYqX0u1Xw63tF3Vuox9SHajhh8QDLZZNMs5R/wfmpGufC/C6qtX/8jehrvFUQhWRupFkbjalwBD900xF3UOwBypnBlpiKjzwQpZ7dPyrNYI0ZKVnXh2tlvF1RkImr0Tzu4UF8BqT1nguhh7cwBJciGSkzwpBQS3kIe6Eo2kbFMHRi3mq6EjyA8ck9+tOw5Iaw=="
+base64_bytes = c_auth.encode()
 message_bytes = base64.b64decode(base64_bytes)
 
 cipher_rsa = PKCS1_OAEP.new(private_key)
 decrypted = cipher_rsa.decrypt(message_bytes)
-session_key = base64.b64encode(decrypted[:-1]).decode('ascii')
+session_key = base64.b64encode(decrypted[:-1]).decode()
 length = decrypted[-1]
 
-sha256 = base64.b64encode(SHA256.new(decrypted[:-1]).digest()).decode('ascii')
+sha256 = base64.b64encode(SHA256.new(decrypted[:-1]).digest()).decode()
 otp = sha256[:length]
 
 print('session key:', session_key)
