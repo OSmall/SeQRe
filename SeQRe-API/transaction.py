@@ -52,15 +52,16 @@ def lambda_handler(event, context):
     ('type' in body and 'tan' in body):
         return error(400, 'either type OR tan shall be present in the body')
 
+    # first request that responds with qr data
     if 'type' in body:
-        type = body['type']
+        transaction_type = body['type']
         transaction_time = int(round(time.time() * 1000))
+        transaction_data = {'type': transaction_type}
         
-        if type == 'getBalance':
-            # TODO check attributes of data
+        if transaction_type == 'getBalance':
             pass
 
-        elif type == 'transfer':
+        elif transaction_type == 'transfer':
             # check recipient is in body
             if 'recipient' not in body:
                 return error(400, 'missing recipient in body')
@@ -87,11 +88,9 @@ def lambda_handler(event, context):
             if amount > balance:
                 return error(400, 'amount must not be more than current balance')
 
-            transaction_data = {
-                'type': type,
-                'recipient': recipient,
-                'amount': amount
-            }
+            transaction_data['recipient'] = recipient
+            transaction_data['amount'] = amount
+        
         else:
             return error(404, 'unexpected type')
         
@@ -121,26 +120,92 @@ def lambda_handler(event, context):
         })
 
         # compute ct
-        data = transaction_key + tan_length.to_bytes(1, 'big')
-        ct = aes_cipher.encrypt(pad(data, AES.block_size)) # 32 bytes
+        hash_data = transaction_key + tan_length.to_bytes(1, 'big')
+        ct = aes_cipher.encrypt(pad(hash_data, AES.block_size)) # 32 bytes
 
         # create transaction_data to be sent through QR code
         transaction_data['time'] = transaction_time
         transaction_data['iv'] = iv
-        transaction_data_bytes = json.dumps(transaction_data).encode()
+        transaction_data_bytes = json.dumps(transaction_data, sort_keys=True).encode()
 
         # compute ht
-        data = transaction_data_bytes + id.encode() + ct
-        ht = SHA256.new(data).digest() # 32 bytes
+        hash_data = transaction_data_bytes + id.encode() + ct
+        ht = SHA256.new(hash_data).digest() # 32 bytes
 
         # create response data
         qr_data = base64.b64encode(transaction_data_bytes + ct + ht).decode()
 
         return response(200, {'qrData': qr_data})
 
-
+    # second request that verifies and performs the transactions
     elif 'tan' in body:
-        pass
+        tan = body['tan']
+
+        if 'transactionTime' not in body:
+            return error(400, 'missing transactionTime in body')
+        transaction_time = body['transactionTime']
+
+        table_response = transactions_table.get_item(Key={
+            'userId': id,
+            'transactionTime': transaction_time
+        }, ProjectionExpression='tanLength, transactionData, transactionKey, verified, iv')
+        if 'Item' not in table_response:
+            return error(404, 'transaction not found')
+        
+        tan_length = int(table_response['Item']['tanLength'])
+        transaction_data = table_response['Item']['transactionData']
+        transaction_key = table_response['Item']['transactionKey']
+        verified = table_response['Item']['verified']
+        iv = table_response['Item']['iv']
+
+        if verified:
+            return error(400, 'transaction already verified')
+        
+        # adding extras to transaction_data
+        transaction_data['time'] = transaction_time
+        transaction_data['iv'] = iv
+        
+        # convert all Decimal types to floats
+        hash_data = {k : float(v) if type(v) == Decimal else v for k,v in transaction_data.items()}
+
+        hash_data = json.dumps(hash_data, sort_keys=True).encode() + base64.b64decode(transaction_key)
+        hash = base64.b64encode(SHA256.new(hash_data).digest()).decode()
+
+        if hash[:tan_length] != tan:
+            return error(400, 'this TAN does not verify the transaction')
+        
+        #  -----Verified-----
+        transactions_table.update_item(Key={
+            'userId': id,
+            'transactionTime': transaction_time
+        }, UpdateExpression='SET verified = :verified',
+        ExpressionAttributeValues={
+            ':verified': True
+        })
+
+        transaction_type = transaction_data['type']
+
+        if transaction_type == 'getBalance':
+            table_response = accounts_table.get_item(Key={'id': id}, ProjectionExpression='balance')
+            return response(200, {'balance': float(table_response['Item']['balance'])})
+
+        elif transaction_type == 'transfer':
+            # subtract amount from this account balance
+            accounts_table.update_item(Key={'id': id},
+            UpdateExpression='SET balance = balance - :amount',
+            ExpressionAttributeValues={
+                ':amount': transaction_data['amount']
+            })
+
+            # add amount to recipient account balance
+            accounts_table.update_item(Key={'id': transaction_data['recipient']},
+            UpdateExpression='SET balance = balance + :amount',
+            ExpressionAttributeValues={
+                ':amount': transaction_data['amount']
+            })
+            
+            return(response(200, {'message': 'transaction verified'}))
+
 
 
 def response(statusCode, body):
