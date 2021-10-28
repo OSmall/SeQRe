@@ -14,6 +14,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     TextView register_txt;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

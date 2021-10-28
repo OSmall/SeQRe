@@ -170,6 +170,7 @@ public class ScanQRCodeActivity extends AppCompatActivity {
                             // create QRdata value
                             QRdata = barcodes.valueAt(0).displayValue;
 
+
                             // try decryption
                             try {
                                 // decode QRData
@@ -187,8 +188,6 @@ public class ScanQRCodeActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Decryption failed", Toast.LENGTH_SHORT).show();
                                 txtBarcodeValue.setText(QRdata);
                             }
-
-
                         }
                     });
 
