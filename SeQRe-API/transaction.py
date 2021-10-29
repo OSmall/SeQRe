@@ -120,8 +120,8 @@ def lambda_handler(event, context):
         })
 
         # compute ct
-        hash_data = transaction_key + tan_length.to_bytes(1, 'big')
-        ct = aes_cipher.encrypt(pad(hash_data, AES.block_size)) # 32 bytes
+        data = transaction_key + tan_length.to_bytes(1, 'big')
+        ct = aes_cipher.encrypt(pad(data, AES.block_size)) # 32 bytes
 
         # create transaction_data to be sent through QR code
         transaction_data['time'] = transaction_time
