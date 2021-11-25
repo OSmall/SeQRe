@@ -5,13 +5,13 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import android.widget.ImageView;
-import android.widget.EditText;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
