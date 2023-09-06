@@ -28,17 +28,15 @@
 
         
         $.ajax({ // make an AJAX request
-          type: "POST",
-          url: "https://9gba6esvt9.execute-api.ap-southeast-2.amazonaws.com/Prod/getCAuth/", 
+          type: "GET",
+          url: "https://ai25mivn47.execute-api.ap-southeast-2.amazonaws.com/prod/session", 
+          headers: {"seqre-id":document.getElementById("user_id").value,
+                    "seqre-alias":document.getElementById("alias").value},
           dataType: 'json',
           contentType: 'application/json',
-          data: JSON.stringify({
-            "id":document.getElementById("user_id").value,
-            "alias":document.getElementById("alias").value
-          }),
 
           success: function(data) {
-            localStorage['cauth'] = data['cAuth'];
+            localStorage['cauth'] = data['qrData'];
             window.location.href = "generated_qr.html"
           },
 
